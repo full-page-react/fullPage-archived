@@ -1,19 +1,30 @@
-import React, { Children, cloneElement, createContext, useCallback, useRef } from "react";
+"use client";
 
-export const FullPageWrapperContext = createContext();
+import { ContextInitialValue, ContextValue } from "@/types/types";
+import React, { Children, ReactElement, ReactNode, WheelEvent, cloneElement, createContext, useCallback, useRef } from "react";
+
+interface Props {
+  width?: string;
+  speed?: number;
+  children?: any;
+  height?: string;
+  dir?: "horizontal" | "vertical";
+}
 
 const initialValue = { page: null, pages: [] };
 
-export const VERTICAL = "VERTICAL";
-export const HORIZONTAL = "HORIZONTAL";
+export const VERTICAL = "vertical";
+export const HORIZONTAL = "horizontal";
 
-const FullPageWrapper = ({ children, height = "100svh", width = "100svw", speed = 500, dir = VERTICAL }) => {
-  const isStarted = useRef(false);
-  const data = useRef(initialValue);
+export const FullPageWrapperContext = createContext<ContextValue>({ current: initialValue });
+
+const FullPageWrapper = ({ children, height = "100svh", width = "100svw", speed = 500, dir = VERTICAL }: Props) => {
+  const isStarted = useRef<boolean>(false);
+  const data = useRef<ContextInitialValue>(initialValue);
 
   const changePageHandler = useCallback(
-    (e) => {
-      if (!isStarted.current && data.current.page) {
+    (e: WheelEvent<HTMLDivElement>) => {
+      if (data.current && data.current.page && !isStarted.current) {
         isStarted.current = true;
         setTimeout(() => (isStarted.current = false), speed);
         const isForwarding = e.deltaY > 0;
@@ -23,9 +34,9 @@ const FullPageWrapper = ({ children, height = "100svh", width = "100svw", speed 
         const newPageId = isForwarding ? data.current.pages[currentIndex + 1] : data.current.pages[currentIndex - 1];
 
         if (newPageId) {
-          const currentElement = document.getElementById(currentId);
+          const currentElement = document.getElementById(currentId)!;
           const currentElementDir = currentElement.dataset.dir;
-          const nextElement = document.getElementById(newPageId);
+          const nextElement = document.getElementById(newPageId)!;
           const nextElementDir = nextElement.dataset.dir;
 
           if (isForwarding) {
@@ -60,13 +71,13 @@ const FullPageWrapper = ({ children, height = "100svh", width = "100svw", speed 
   return (
     <FullPageWrapperContext.Provider value={data}>
       <div style={{ width, height }} className="relative overflow-hidden mr-auto" onWheel={changePageHandler}>
-        {Children.map(
-          children,
-          (child, index) =>
-            child.type.displayName === "FullPageSection" &&
-            cloneElement(child, { width, speed, height, pageId: `${index + 1}`, dir: child.props.dir || dir })
-        )}
-        <div className="absolute top-0 left-0 text-white z-50">slam</div>
+        {children &&
+          Children.map(
+            children,
+            (child, index) =>
+              child?.type.displayName === "FullPageSection" &&
+              cloneElement(child, { width, speed, height, pageId: `${index + 1}`, dir: child.props.dir || dir })
+          )}
       </div>
     </FullPageWrapperContext.Provider>
   );
