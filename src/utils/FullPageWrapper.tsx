@@ -19,7 +19,7 @@ export const HORIZONTAL = "horizontal";
 export const FullPageWrapperContext = createContext<ContextValue>({ current: initialValue });
 
 const FullPageWrapper = ({ children, height = "100svh", width = "100svw", speed = 500, dir = VERTICAL }: Props) => {
-  const isStarted = useRef<boolean>(false);
+  const isStarted = useRef(false);
   const data = useRef<ContextInitialValue>(initialValue);
 
   const changePageHandler = useCallback(
