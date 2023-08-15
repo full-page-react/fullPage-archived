@@ -4,5 +4,7 @@ export interface ContextInitialValue {
 }
 
 export interface ContextValue {
-  current: ContextInitialValue | undefined;
+  current?: ContextInitialValue;
 }
+
+export type DirType = "vertical" | "horizontal";

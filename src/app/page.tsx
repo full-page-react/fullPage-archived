@@ -1,15 +1,18 @@
+"use client";
 import React from "react";
 import FullPageWrapper from "../utils/FullPageWrapper";
 import FullPageSection from "../utils/FullPageSection";
-import { sum } from "./test";
 
 const Home = () => {
-  console.log(sum(1, "s"));
-
   return (
     <div>
-      <FullPageWrapper width="100svh" height="100svh">
-        <FullPageSection className="bg-red-700">slam</FullPageSection>
+      <FullPageWrapper>
+        <FullPageSection pageId="1" className="bg-red-400 flex items-center justify-center">
+          1
+        </FullPageSection>
+        <FullPageSection pageId="2" className="bg-blue-400 flex items-center justify-center">
+          2
+        </FullPageSection>
       </FullPageWrapper>
     </div>
   );

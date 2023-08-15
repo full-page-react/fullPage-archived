@@ -1,31 +1,26 @@
-"use client";
+import { DirType } from "@/types/types";
+import { FullPageWrapperContext } from "./FullPageWrapper";
+import React, { Children, cloneElement, useContext, useEffect, useMemo, useState } from "react";
 
-import { ContextValue } from "@/types/types";
-import { FullPageWrapperContext, HORIZONTAL, VERTICAL } from "./FullPageWrapper";
-import React, { useMemo, Children, useState, ReactNode, useEffect, useContext, cloneElement } from "react";
-
-interface Props {
+type FullPageSectionProps = {
+  pageId: string;
   width?: string;
-  speed?: string;
   height?: string;
-  pageId?: string;
+  speed?: number;
   className?: string;
-  children?: ReactNode;
-  dir?: "horizontal" | "vertical";
-  [key: string]: string | ReactNode;
-}
+  children?: React.ReactNode;
+  dir?: DirType;
+};
 
-const FullPageSection = ({ pageId, width, height, speed, className, children, dir }: Props): any => {
+const FullPageSection = ({ pageId, width, height, speed, className, children, dir }: FullPageSectionProps) => {
   const [mounted, setMounted] = useState(false);
-  const data = useContext<ContextValue>(FullPageWrapperContext);
+  const data = useContext(FullPageWrapperContext);
 
   const isWrapper = useMemo(
     () =>
-      Children.toArray(children).find((child) => {
-        if (child && child.type) {
-          child?.type?.displayName === "FullPageSection";
-        }
-      }),
+      Children.toArray(children).find(
+        (child) => React.isValidElement(child) && child.type && (child.type as any).displayName === "FullPageSection"
+      ),
     [children]
   );
 
@@ -37,30 +32,35 @@ const FullPageSection = ({ pageId, width, height, speed, className, children, di
   }, [data, isWrapper, mounted, pageId]);
 
   return isWrapper ? (
-    Children.map(
-      children,
-      (child, index) =>
-        child.type.displayName === "FullPageSection" &&
-        cloneElement(child, { pageId: `${pageId}-${index + 1}`, width, height, dir: child.props.dir || dir, speed })
-    )
+    Children.map(children, (child, index) => {
+      if (React.isValidElement(child)) {
+        const childElement = child as React.ReactElement<any, React.ComponentType<any>>;
+
+        if (childElement.type && childElement.type.displayName === "FullPageSection") {
+          const props: FullPageSectionProps = {
+            pageId: `${pageId}-${index + 1}`,
+            width,
+            height,
+            dir: child.props.dir || dir,
+            speed,
+          };
+          return cloneElement(child, props);
+        }
+      }
+      return child;
+    })
   ) : (
     <section
       id={pageId}
-      className={`${className} centering absolute`}
-      data-dir={dir === HORIZONTAL ? HORIZONTAL : VERTICAL}
+      className={`${className} centering absolute w-full`}
+      data-dir={dir}
       style={{
         width,
         height,
         transition: `${speed}ms ease-in-out`,
-        top: dir === HORIZONTAL ? "0%" : "100%",
-        left: dir === HORIZONTAL ? "100%" : "0%",
-        transform: data.current
-          ? data.current.page === pageId
-            ? dir === HORIZONTAL
-              ? "translateX(-100%)"
-              : "translateY(-100%)"
-            : undefined
-          : undefined,
+        top: dir === "horizontal" ? "0%" : "100%",
+        left: dir === "horizontal" ? "100%" : "0%",
+        transform: data.current.page === pageId ? (dir === "horizontal" ? "translateX(-100%)" : "translateY(-100%)") : undefined,
       }}
     >
       {children}

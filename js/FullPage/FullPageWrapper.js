@@ -66,7 +66,6 @@ const FullPageWrapper = ({ children, height = "100svh", width = "100svw", speed 
             child.type.displayName === "FullPageSection" &&
             cloneElement(child, { width, speed, height, pageId: `${index + 1}`, dir: child.props.dir || dir })
         )}
-        <div className="absolute top-0 left-0 text-white z-50">slam</div>
       </div>
     </FullPageWrapperContext.Provider>
   );

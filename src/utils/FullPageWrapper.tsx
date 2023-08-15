@@ -1,30 +1,30 @@
-"use client";
+import { ContextInitialValue, DirType } from "@/types/types";
+import React, { Children, cloneElement, createContext, useCallback, useRef } from "react";
 
-import { ContextInitialValue, ContextValue } from "@/types/types";
-import React, { Children, ReactElement, ReactNode, WheelEvent, cloneElement, createContext, useCallback, useRef } from "react";
+const initialValue: ContextInitialValue = { page: null, pages: [] };
+export const FullPageWrapperContext = createContext({ current: initialValue });
 
-interface Props {
+type FullPageWrapperProps = {
+  children: React.ReactNode;
+  height?: string;
   width?: string;
   speed?: number;
-  children?: any;
-  height?: string;
-  dir?: "horizontal" | "vertical";
-}
+  dir?: DirType;
+};
 
-const initialValue = { page: null, pages: [] };
-
-export const VERTICAL = "vertical";
-export const HORIZONTAL = "horizontal";
-
-export const FullPageWrapperContext = createContext<ContextValue>({ current: initialValue });
-
-const FullPageWrapper = ({ children, height = "100svh", width = "100svw", speed = 500, dir = VERTICAL }: Props) => {
+const FullPageWrapper = ({
+  children,
+  height = "100svh",
+  width = "100svw",
+  speed = 500,
+  dir = "vertical",
+}: FullPageWrapperProps) => {
   const isStarted = useRef(false);
-  const data = useRef<ContextInitialValue>(initialValue);
+  const data = useRef(initialValue);
 
   const changePageHandler = useCallback(
-    (e: WheelEvent<HTMLDivElement>) => {
-      if (data.current && data.current.page && !isStarted.current) {
+    (e: React.WheelEvent<HTMLDivElement>) => {
+      if (!isStarted.current && data.current.page) {
         isStarted.current = true;
         setTimeout(() => (isStarted.current = false), speed);
         const isForwarding = e.deltaY > 0;
@@ -33,31 +33,31 @@ const FullPageWrapper = ({ children, height = "100svh", width = "100svw", speed 
         const currentId = data.current.pages[currentIndex];
         const newPageId = isForwarding ? data.current.pages[currentIndex + 1] : data.current.pages[currentIndex - 1];
 
-        if (newPageId) {
-          const currentElement = document.getElementById(currentId)!;
+        const currentElement = document.getElementById(currentId);
+        if (newPageId && currentElement) {
           const currentElementDir = currentElement.dataset.dir;
-          const nextElement = document.getElementById(newPageId)!;
-          const nextElementDir = nextElement.dataset.dir;
+          const nextElement = document.getElementById(newPageId);
+          const nextElementDir = nextElement?.dataset?.dir;
 
           if (isForwarding) {
-            if (nextElementDir === HORIZONTAL) {
-              if (currentElementDir === HORIZONTAL) currentElement.style.transform = "translateX(-200%)";
+            if (nextElementDir === "horizontal") {
+              if (currentElementDir === "horizontal") currentElement.style.transform = "translateX(-200%)";
               else currentElement.style.transform = "translateY(-100%) translateX(-100%)";
-              nextElement.style.transform = "translateX(-100%)";
+              (nextElement as HTMLElement).style.transform = "translateX(-100%)";
             } else {
-              if (currentElementDir === VERTICAL) currentElement.style.transform = "translateY(-200%)";
+              if (currentElementDir === "vertical") currentElement.style.transform = "translateY(-200%)";
               else currentElement.style.transform = "translateY(-100%) translateX(-100%)";
-              nextElement.style.transform = "translateY(-100%)";
+              (nextElement as HTMLElement).style.transform = "translateY(-100%)";
             }
           } else {
-            if (nextElementDir === HORIZONTAL) {
-              if (currentElementDir === HORIZONTAL) currentElement.style.transform = "translateX(0)";
+            if (nextElementDir === "horizontal") {
+              if (currentElementDir === "horizontal") currentElement.style.transform = "translateX(0)";
               else currentElement.style.transform = "translateX(0) translateY(0)";
-              nextElement.style.transform = "translateX(-100%)";
+              (nextElement as HTMLElement).style.transform = "translateX(-100%)";
             } else {
-              if (currentElementDir === VERTICAL) currentElement.style.transform = "translateY(0)";
+              if (currentElementDir === "vertical") currentElement.style.transform = "translateY(0)";
               else currentElement.style.transform = "translateY(0) translateX(0)";
-              nextElement.style.transform = "translateY(-100%)";
+              (nextElement as HTMLElement).style.transform = "translateY(-100%)";
             }
           }
 
@@ -71,13 +71,21 @@ const FullPageWrapper = ({ children, height = "100svh", width = "100svw", speed 
   return (
     <FullPageWrapperContext.Provider value={data}>
       <div style={{ width, height }} className="relative overflow-hidden mr-auto" onWheel={changePageHandler}>
-        {children &&
-          Children.map(
-            children,
-            (child, index) =>
-              child?.type.displayName === "FullPageSection" &&
-              cloneElement(child, { width, speed, height, pageId: `${index + 1}`, dir: child.props.dir || dir })
-          )}
+        {Children.map(children, (child, index) => {
+          if (React.isValidElement(child)) {
+            const childElement = child as React.ReactElement<any, React.ComponentType<any>>;
+            if (childElement.type && childElement.type.displayName === "FullPageSection") {
+              return cloneElement(childElement, {
+                width,
+                speed,
+                height,
+                pageId: `${index + 1}`,
+                dir: childElement.props.dir || dir,
+              });
+            }
+          }
+          return child;
+        })}
       </div>
     </FullPageWrapperContext.Provider>
   );
