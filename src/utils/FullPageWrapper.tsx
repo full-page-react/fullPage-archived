@@ -1,19 +1,8 @@
-import { ContextInitialValue, DirType } from "@/types/types";
+import { ContextInitialValue, FullPageWrapperProps } from "@/types/types";
 import React, { Children, cloneElement, createContext, useCallback, useRef } from "react";
 
 const initialValue: ContextInitialValue = { page: null, pages: [] };
 export const FullPageWrapperContext = createContext({ current: initialValue });
-
-type dirHeight = "svh" | "lvh" | "vh" | "rem" | "px";
-type dirWidth = "svw" | "lvw" | "vw" | "rem" | "px";
-
-type FullPageWrapperProps = {
-  children: React.ReactNode;
-  height?: `${number}${dirHeight}`;
-  width?: `${number}${dirWidth}`;
-  speed?: number;
-  dir?: DirType;
-};
 
 const FullPageWrapper = ({
   children,
@@ -78,11 +67,11 @@ const FullPageWrapper = ({
             const childElement = child as React.ReactElement<any, React.ComponentType<any>>;
             if (childElement.type && childElement.type.displayName === "FullPageSection") {
               return cloneElement(childElement, {
-                width,
-                speed,
-                height,
-                pageId: `${index + 1}`,
                 dir: childElement.props.dir || dir,
+                pageId: `${index + 1}`,
+                height,
+                speed,
+                width,
               });
             }
           }
