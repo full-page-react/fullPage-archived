@@ -3,8 +3,6 @@ import React from "react";
 import FullPageSection from "@/utils/FullPageSection";
 import FullPageWrapper from "@/utils/FullPageWrapper";
 
-// dir: having children
-
 const Home = () => {
   return (
     <div className="w-[100svw] h-[100svh] bg-slate-700">

@@ -67,11 +67,11 @@ const FullPageWrapper = ({
             const childElement = child as React.ReactElement<any, React.ComponentType<any>>;
             if (childElement.type && childElement.type.displayName === "FullPageSection") {
               return cloneElement(childElement, {
-                dir: childElement.props.dir || dir,
-                pageId: `${index + 1}`,
-                height,
                 speed,
                 width,
+                height,
+                pageId: `${index + 1}`,
+                dir: childElement.props.dir || dir,
               });
             }
           }

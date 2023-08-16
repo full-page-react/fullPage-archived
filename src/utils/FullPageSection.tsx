@@ -39,11 +39,11 @@ const FullPageSection = ({ pageId, width, height, speed, className, children, di
           const childElement = child as React.ReactElement<any, React.ComponentType<any>>;
           if (childElement.type && childElement.type.displayName === "FullPageSection") {
             const props: FullPageSectionProps = {
-              pageId: `${pageId}-${index + 1}`,
-              dir: child.props.dir || dir,
               speed,
-              height,
               width,
+              height,
+              dir: child.props.dir || dir,
+              pageId: `${pageId}-${index + 1}`,
             };
             return cloneElement(child, props);
           }
