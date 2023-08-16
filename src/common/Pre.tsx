@@ -1,4 +1,5 @@
 import Prism from "prismjs";
+import { toast } from "react-hot-toast";
 import { ClipboardIcon, RocketIcon } from "@/assets/icons";
 import React, { useCallback, useEffect, useState } from "react";
 
@@ -13,10 +14,11 @@ const Pre = ({ children }: { children: string }) => {
     if (!active) {
       if ("clipboard" in navigator) {
         setActive(true);
+        toast.success("Copied");
         navigator.clipboard.writeText(children);
         setTimeout(() => setActive(false), 1100);
       }
-    }
+    } else toast.error("Your browser does'nt support this feature");
   }, [active, children]);
 
   return (
