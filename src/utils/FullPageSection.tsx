@@ -3,17 +3,17 @@ import { FullPageWrapperContext } from "./FullPageWrapper";
 import React, { Children, cloneElement, useContext, useEffect, useMemo, useState } from "react";
 
 type FullPageSectionProps = {
-  pageId: string;
+  dir?: DirType;
   width?: string;
-  height?: string;
   speed?: number;
+  pageId?: string;
+  height?: string;
   className?: string;
   children?: React.ReactNode;
-  dir?: DirType;
 };
 
 const FullPageSection = ({ pageId, width, height, speed, className, children, dir }: FullPageSectionProps) => {
-  const [mounted, setMounted] = useState(false);
+  const [mounted, setMounted] = useState<boolean>(false);
   const data = useContext(FullPageWrapperContext);
 
   const isWrapper = useMemo(
@@ -26,7 +26,10 @@ const FullPageSection = ({ pageId, width, height, speed, className, children, di
 
   useEffect(() => {
     if (!mounted) {
-      !isWrapper && (data.current = { page: data.current.page || pageId, pages: [...data.current.pages, pageId] });
+      if (!isWrapper) {
+        data.current.page = data.current.page || (pageId as string);
+        data.current.pages.push(pageId as string);
+      }
       setMounted(true);
     }
   }, [data, isWrapper, mounted, pageId]);
@@ -35,24 +38,22 @@ const FullPageSection = ({ pageId, width, height, speed, className, children, di
     Children.map(children, (child, index) => {
       if (React.isValidElement(child)) {
         const childElement = child as React.ReactElement<any, React.ComponentType<any>>;
-
         if (childElement.type && childElement.type.displayName === "FullPageSection") {
           const props: FullPageSectionProps = {
-            pageId: `${pageId}-${index + 1}`,
             width,
+            speed,
             height,
             dir: child.props.dir || dir,
-            speed,
+            pageId: `${pageId}-${index + 1}`,
           };
           return cloneElement(child, props);
         }
       }
-      return child;
     })
   ) : (
     <section
       id={pageId}
-      className={`${className} centering absolute w-full`}
+      className={`${className} flex justify-center text-5xl items-center absolute w-full`}
       data-dir={dir}
       style={{
         width,

@@ -4,20 +4,23 @@ import React, { Children, cloneElement, createContext, useCallback, useRef } fro
 const initialValue: ContextInitialValue = { page: null, pages: [] };
 export const FullPageWrapperContext = createContext({ current: initialValue });
 
+type dirHeight = "svh" | "lvh" | "vh" | "rem" | "px";
+type dirWidth = "svw" | "lvw" | "vw" | "rem" | "px";
+
 type FullPageWrapperProps = {
   children: React.ReactNode;
-  height?: string;
-  width?: string;
+  height?: `${number}${dirHeight}`;
+  width?: `${number}${dirWidth}`;
   speed?: number;
   dir?: DirType;
 };
 
 const FullPageWrapper = ({
   children,
-  height = "100svh",
-  width = "100svw",
   speed = 500,
+  width = "100svw",
   dir = "vertical",
+  height = "100svh",
 }: FullPageWrapperProps) => {
   const isStarted = useRef(false);
   const data = useRef(initialValue);
@@ -26,7 +29,7 @@ const FullPageWrapper = ({
     (e: React.WheelEvent<HTMLDivElement>) => {
       if (!isStarted.current && data.current.page) {
         isStarted.current = true;
-        setTimeout(() => (isStarted.current = false), speed);
+        setTimeout(() => (isStarted.current = false), speed + 100);
         const isForwarding = e.deltaY > 0;
 
         const currentIndex = data.current.pages.findIndex((item) => item === data.current.page);
@@ -60,7 +63,6 @@ const FullPageWrapper = ({
               (nextElement as HTMLElement).style.transform = "translateY(-100%)";
             }
           }
-
           data.current = { ...data.current, page: newPageId };
         }
       }
@@ -84,7 +86,6 @@ const FullPageWrapper = ({
               });
             }
           }
-          return child;
         })}
       </div>
     </FullPageWrapperContext.Provider>
