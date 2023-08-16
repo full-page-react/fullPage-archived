@@ -1,6 +1,6 @@
 import { FullPageSectionProps } from "@/types/types";
 import { FullPageWrapperContext } from "./FullPageWrapper";
-import React, { Children, cloneElement, isValidElement, useCallback, useContext, useEffect, useMemo, useState } from "react";
+import React, { Children, cloneElement, isValidElement, useContext, useEffect, useMemo, useState } from "react";
 
 const FullPageSection = ({ pageId, width, height, speed, className, children, dir }: FullPageSectionProps) => {
   const [mounted, setMounted] = useState(false);
