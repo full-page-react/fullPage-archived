@@ -18,7 +18,7 @@ const FullPageWrapper = ({
     (e: React.WheelEvent<HTMLDivElement>) => {
       if (!isStarted.current && data.current.page) {
         isStarted.current = true;
-        setTimeout(() => (isStarted.current = false), speed + 100);
+        setTimeout(() => (isStarted.current = false), speed + 50);
         const isForwarding = e.deltaY > 0;
 
         const currentIndex = data.current.pages.findIndex((item) => item === data.current.page);

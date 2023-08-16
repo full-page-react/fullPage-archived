@@ -24,14 +24,6 @@ const FullPageSection = ({ pageId, width, height, speed, className, children, di
     }
   }, [data, isWrapper, mounted, pageId]);
 
-  const pageOneHandler = useCallback(() => {
-    setTimeout(() => {
-      const pageOne = document.getElementById(pageId as string)!;
-      pageOne.style.transition = `${speed}ms ease-in-out`;
-    }, speed);
-    return undefined;
-  }, [pageId, speed]);
-
   return isWrapper ? (
     <>
       {Children.map(children, (child, index) => {
@@ -53,14 +45,14 @@ const FullPageSection = ({ pageId, width, height, speed, className, children, di
   ) : (
     <section
       id={pageId}
-      className={`${className} flex justify-center text-5xl items-center absolute w-full`}
+      className={`${className} absolute w-full`}
       data-dir={dir}
       style={{
         width,
         height,
+        transition: `${speed}ms ease-in-out`,
         top: dir === "horizontal" ? "0%" : "100%",
         left: dir === "horizontal" ? "100%" : "0%",
-        transition: pageId === "1" ? pageOneHandler() : `${speed}ms ease-in-out`,
         transform: data.current.page === pageId ? (dir === "horizontal" ? "translateX(-100%)" : "translateY(-100%)") : undefined,
       }}
     >

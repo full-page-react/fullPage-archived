@@ -1,3 +1,57 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer utilities {
+  .link {
+    @apply text-white/50 rounded-md hover:text-white/100 transition duration-300 text-5xl;
+  }
+}
+
+@layer base {
+  .flex-start-center {
+    @apply flex justify-start items-center;
+  }
+  .flex-start-end {
+    @apply flex justify-start items-end;
+  }
+  .flex-start-start {
+    @apply flex justify-start items-start;
+  }
+  .flex-center-start {
+    @apply flex justify-center items-start;
+  }
+  .centering {
+    @apply !flex !justify-center !items-center;
+  }
+  .flex-center-end {
+    @apply flex justify-center items-end;
+  }
+  .flex-end-start {
+    @apply flex justify-end items-start;
+  }
+  .flex-end-center {
+    @apply flex justify-end items-center;
+  }
+  .flex-end-end {
+    @apply flex justify-end items-end;
+  }
+  .flex-between-start {
+    @apply flex justify-between items-start;
+  }
+  .flex-between-center {
+    @apply flex justify-between items-center;
+  }
+  .flex-between-end {
+    @apply flex justify-between items-end;
+  }
+  .flex-around-start {
+    @apply flex justify-around items-start;
+  }
+  .flex-around-center {
+    @apply flex justify-around items-center;
+  }
+  .flex-around-end {
+    @apply flex justify-around items-end;
+  }
+}

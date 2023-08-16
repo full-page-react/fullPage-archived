@@ -1,5 +1,9 @@
-import "../styles/globals.css";
 import type { Metadata } from "next";
+// styles
+import "../styles/globals.css";
+// Pre tag styles
+import "../styles/theme3.css";
+// next font
 import { Inter } from "next/font/google";
 
 const inter = Inter({ subsets: ["latin"] });
