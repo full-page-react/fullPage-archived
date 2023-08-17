@@ -17,17 +17,17 @@ const Pre = ({ children }: { children: string }) => {
         toast.success("Copied");
         navigator.clipboard.writeText(children);
         setTimeout(() => setActive(false), 1100);
-      }
-    } else toast.error("Your browser does'nt support this feature");
+      } else toast.error("Your browser does'nt support this feature");
+    }
   }, [active, children]);
 
   return (
     <pre dir="ltr" className="max-w-full w-full">
       <button onClick={copyHandler} className="mb-4 border border-color rounded-md w-fit p-2 block relative overflow-hidden">
-        <ClipboardIcon className={`Transition ${active ? "scale-0" : "scale-100"}`} />
+        <ClipboardIcon className={`transition duration-200 ${active ? "scale-0" : "scale-100"}`} />
         <span
           className={`absolute w-full h-full centering top-full right-full ${
-            active && "translate-x-[200%] -translate-y-[200%] Transition !duration-[1100ms]"
+            active && "translate-x-[200%] -translate-y-[200%] transition !duration-[1100ms]"
           }`}
         >
           <RocketIcon />
