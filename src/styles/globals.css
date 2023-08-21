@@ -4,10 +4,19 @@
 
 @layer base {
   html {
-    @apply select-none;
+    @apply select-none text-white;
   }
   img {
     @apply pointer-events-none;
+  }
+  h1 {
+    @apply text-[130px] font-bold;
+  }
+  h2 {
+    @apply text-[90px] font-bold;
+  }
+  h3 {
+    @apply text-xl;
   }
 }
 
