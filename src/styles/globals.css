@@ -2,13 +2,19 @@
 @tailwind components;
 @tailwind utilities;
 
+@layer base {
+  html {
+    @apply select-none;
+  }
+  img {
+    @apply pointer-events-none;
+  }
+}
+
 @layer utilities {
   .link {
     @apply text-white/50 rounded-md hover:text-white/100 transition duration-300 text-5xl;
   }
-}
-
-@layer base {
   .flex-start-center {
     @apply flex justify-start items-center;
   }

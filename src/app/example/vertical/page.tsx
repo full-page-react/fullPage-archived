@@ -8,7 +8,7 @@ import FullPageWrapper from "@/utils/FullPageWrapper";
 
 const Vertical = () => {
   return (
-    <FullPageWrapper width="100svw" height="100svh" dir="horizontal" speed={500}>
+    <FullPageWrapper width="100svw" height="100svh" speed={900}>
       <FullPageSection className="bg-gradient-to-br from-[#40adff] to-[#3f62ff]">
         <FirstPage />
       </FullPageSection>
@@ -35,7 +35,7 @@ const FirstPage = () => {
       
   const Vertical = () => {
     return (
-      <FullPageWrapper width="100svw" height="100svh" dir="horizontal" speed={500}>
+      <FullPageWrapper width="100svw" height="100svh" speed={900}>
         <FullPageSection className="bg-gradient-to-br from-[#40adff] to-[#3f62ff]">
           Page 1
         </FullPageSection>
@@ -51,7 +51,7 @@ const FirstPage = () => {
       
   export default Vertical;`}
     >
-      <h1 className="text-center text-4xl text-white">Horizontal</h1>
+      <h1 className="text-center text-4xl text-white">Vertical</h1>
     </Document>
   );
 };

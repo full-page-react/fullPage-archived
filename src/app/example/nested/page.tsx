@@ -8,7 +8,7 @@ import React from "react";
 
 const Nested = () => {
   return (
-    <FullPageWrapper width="100svw" height="100svh" speed={500}>
+    <FullPageWrapper width="100svw" height="100svh" speed={900}>
       <FullPageSection className="bg-gradient-to-br from-[#40adff] to-[#3f62ff]">
         <FirstPage />
       </FullPageSection>
@@ -43,7 +43,7 @@ const FirstPage = () => {
       
   const Nested = () => {
     return (
-      <FullPageWrapper width="100svw" height="100svh" dir="horizontal" speed={500}>
+      <FullPageWrapper width="100svw" height="100svh" dir="horizontal" speed={900}>
       <FullPageSection className="bg-gradient-to-br from-[#40adff] to-[#3f62ff]">
         <FirstPage />
       </FullPageSection>
