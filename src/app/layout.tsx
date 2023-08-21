@@ -10,7 +10,7 @@ import { Toaster } from "react-hot-toast";
 
 const font = Lexend_Deca({ subsets: ["latin"] });
 
-export const metadata: Metadata = { title: "Full page" };
+export const metadata: Metadata = { title: "FullPage" };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (

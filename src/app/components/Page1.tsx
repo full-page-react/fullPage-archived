@@ -23,7 +23,7 @@ const Page1 = () => {
           className="bg-white rounded py-1.5 px-4 centering gap-2"
         >
           <GitHubIcon className="w-8 h-8" />
-          <span>Start</span>
+          <span>Star</span>
         </Link>
         <button
           className="bg-white rounded px-4 centering gap-2"
