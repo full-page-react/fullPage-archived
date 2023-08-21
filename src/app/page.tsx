@@ -14,28 +14,28 @@ import VerticalExample from "./components/VerticalExample";
 const Home = () => {
   return (
     <FullPageWrapper width="100svw" height="100svh" speed={900}>
-      <FullPageSection className="centering flex-col gap-8 bg-gradient-to-br from-[#40adff] to-[#3f62ff]">
+      <FullPageSection className="centering flex-col gap-8 bg-gradient-to-br from-[#58effa] to-[#390a77]">
         <Page1 />
       </FullPageSection>
 
-      <FullPageSection className="bg-gradient-to-br from-[#ff983f] to-[#ff4c40] centering flex-col">
+      <FullPageSection className="bg-gradient-to-br from-[#ff983f] to-[#f84f43] centering flex-col">
         <Page2 />
       </FullPageSection>
 
-      <FullPageSection className="bg-gradient-to-br from-[#329125] to-[#40ff69] centering flex-col">
+      <FullPageSection className="bg-gradient-to-br from-[#64e453] to-[#097420] centering flex-col">
         <VerticalExample />
       </FullPageSection>
 
       <FullPageSection dir="horizontal">
-        <FullPageSection className="bg-gradient-to-br from-[#61eed4] to-[#1c71aa] centering flex-col">
+        <FullPageSection className="bg-gradient-to-br from-[#40adff] to-[#3f62ff] centering flex-col">
           <HorizontalExample />
         </FullPageSection>
-        <FullPageSection className="bg-gradient-to-br from-[#f740ff] to-[#3827b6] centering flex-col">
+        <FullPageSection className="bg-gradient-to-br from-[#ff6b6b] to-[#c41616] centering flex-col">
           <NestedExample />
         </FullPageSection>
       </FullPageSection>
 
-      <FullPageSection className="bg-gradient-to-br from-[#fec401] to-[#85850f] centering">
+      <FullPageSection className="bg-gradient-to-br from-[#ffd23e] to-[#ccbf04] centering">
         <Page4 />
       </FullPageSection>
     </FullPageWrapper>

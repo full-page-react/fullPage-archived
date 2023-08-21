@@ -2,6 +2,7 @@ import Pre from "@/common/Pre";
 import React from "react";
 
 const NestedExample = () => {
+  
   return (
     <div>
       <h3 className="text-center text-4xl mb-6">Nested Example</h3>
