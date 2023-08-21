@@ -4,10 +4,9 @@ import Pre from "@/common/Pre";
 const HorizontalExample = () => {
   return (
     <div>
-      <h1 className="text-center text-4xl mb-6">Horizontal Example</h1>
+      <h1 className="text-center text-4xl mb-8">Horizontal Example</h1>
       <Pre>
         {`"use client";
-
 import React from "react";
 import FullPageSection from "tech-full-page";
 import FullPageWrapper from "tech-full-page";

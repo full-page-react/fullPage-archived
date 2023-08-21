@@ -5,11 +5,10 @@ const NestedExample = () => {
   
   return (
     <div>
-      <h3 className="text-center text-4xl mb-6">Nested Example</h3>
+      <h3 className="text-center text-4xl mb-8">Nested Example</h3>
 
       <Pre>
         {`"use client";
-
 import React from "react";
 import FullPageSection from "tech-full-page";
 import FullPageWrapper from "tech-full-page";

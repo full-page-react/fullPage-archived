@@ -1,5 +1,8 @@
 import Logo from "@/assets/Logo";
+import { GitHubIcon, NpmIcon } from "@/assets/icons";
+import Link from "next/link";
 import React from "react";
+import toast from "react-hot-toast";
 
 const Page1 = () => {
   return (
@@ -14,9 +17,21 @@ const Page1 = () => {
       </div>
 
       <div className="centering gap-4 text-black">
-        <button className="bg-white rounded py-1.5 px-4">View on GitHub</button>
-        <button className="bg-white rounded py-1.5 px-4">Start</button>
-        <button className="bg-white rounded py-1.5 px-4">NPM</button>
+        <Link
+          target="_blank"
+          href="https://github.com/techteammate/Tech-full-page"
+          className="bg-white rounded py-1.5 px-4 centering gap-2"
+        >
+          <GitHubIcon className="w-8 h-8" />
+          <span>Start</span>
+        </Link>
+        <button
+          className="bg-white rounded px-4 centering gap-2"
+          onClick={() => toast.error("This package is under development")}
+        >
+          <NpmIcon className="w-[2.69rem] h-[2.69rem]" />
+          <span>NPM</span>
+        </button>
       </div>
     </>
   );

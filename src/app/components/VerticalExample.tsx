@@ -4,10 +4,9 @@ import Pre from "@/common/Pre";
 const VerticalExample = () => {
   return (
     <div>
-      <h1 className="text-center text-4xl mb-6">Vertical Example</h1>
+      <h1 className="text-center text-4xl mb-8">Vertical Example</h1>
       <Pre>
         {`"use client";
-
 import React from "react";
 import FullPageSection from "tech-full-page";
 import FullPageWrapper from "tech-full-page";
